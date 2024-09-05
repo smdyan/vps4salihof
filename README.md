@@ -1,4 +1,4 @@
-# remote_host
+# vps4salihof
 
 Setup Dokuwiki service:
 
