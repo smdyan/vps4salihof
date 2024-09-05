@@ -1,0 +1,77 @@
+services:
+  swag:
+    image: lscr.io/linuxserver/swag
+    container_name: swag
+    cap_add:
+      - NET_ADMIN #Linux capabilities
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=Europe/moscow
+      - URL=salihof.ru
+      - SUBDOMAINS=www,wiki,str,depo
+      - VALIDATION=http
+        # - CERTPROVIDER= #optional
+        # - DNSPLUGIN=cloudflare #optional
+        # - DUCKDNSTOKEN=<token> #optional
+        # - EMAIL=<e-mail> #optional
+      - ONLY_SUBDOMAINS=false #optional
+        # - EXTRA_DOMAINS=<extradomains> #optional
+        # - STAGING=false #optional
+    volumes:
+      - /vlm_docker/swag/config:/config
+    networks:
+      - mynet
+    ports:
+      - 443:443
+      - 80:80 #optional, required for http validation only
+    depends_on:
+      - dokuwiki
+    restart: unless-stopped
+
+  dokuwiki:
+    image: lscr.io/linuxserver/dokuwiki:latest
+    container_name: dokuwiki
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=europe/moscow
+    volumes:
+      - /vlm_docker/dokuwiki/config:/config    
+    networks:
+      - mynet
+    restart: unless-stopped
+
+  wireguard:
+    image: lscr.io/linuxserver/wireguard:latest
+    container_name: wireguard
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE #optional
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=europe/moscow
+      - SERVERURL=auto #optional
+      - SERVERPORT=51820 #optional
+      - PEERS=4 #optional
+      - PEERDNS=auto #optional
+      - INTERNAL_SUBNET=10.13.13.0 #optional
+      - ALLOWEDIPS=0.0.0.0/0 #optional
+      - PERSISTENTKEEPALIVE_PEERS= #optional
+      - LOG_CONFS=true #optional
+    volumes:
+      - /vlm_docker/wireguard/config:/config
+      - /lib/modules:/lib/modules #optional
+    networks:
+      - mynet
+    ports:
+      - 51820:51820/udp
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+    restart: unless-stopped
+    
+networks:
+  mynet:
+    driver: bridge
+
