@@ -84,7 +84,7 @@ services:
       - mynet
     ports:
       - 943:943 #for the Admin Web UI
-      - 443:443 #for TCP
+      - 444:443 #for TCP
       - 1194:1194/udp
     restart: unless-stopped
 
