@@ -70,7 +70,22 @@ services:
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
     restart: unless-stopped
-    
+
+  openvpn:
+    image: openvpn/openvpn-as
+    container_name: openvpn
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - /vlm_docker/openvpn/config:/config
+    networks:
+      - mynet
+    ports:
+      - 943:943 #for the Admin Web UI
+      - 443:443 #for TCP
+      - 1194:1194/udp
+    restart: unless-stopped
+
 networks:
   mynet:
     driver: bridge
