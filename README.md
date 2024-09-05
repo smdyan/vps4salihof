@@ -23,7 +23,7 @@ Setup Dokuwiki service:
 Dokuwiki pages backup:
 
 1. Create an archive: tar -cf wiki_pages_date.tar  ~/vps/doku_conf/dokuwiki/data/pages
-2. Copy from remote to local: scp smdyan@salihof.ru:/home/user/wiki_pages_date.tar ./
+2. Copy from remote to local: scp user@host.ru:/home/user/wiki_pages_date.tar ./
 
 Docker:
 
