@@ -2,6 +2,8 @@ services:
   swag:
     image: lscr.io/linuxserver/swag
     container_name: swag
+    profiles:
+      - swag
     cap_add:
       - NET_ADMIN #Linux capabilities
     environment:
@@ -9,7 +11,7 @@ services:
       - PGID=1001
       - TZ=Europe/moscow
       - URL=salihof.ru
-      - SUBDOMAINS=www,wiki,str,depo
+      - SUBDOMAINS=www,wiki,str,depo,vpn
       - VALIDATION=http
         # - CERTPROVIDER= #optional
         # - DNSPLUGIN=cloudflare #optional
@@ -25,13 +27,15 @@ services:
     ports:
       - 443:443
       - 80:80 #optional, required for http validation only
-    depends_on:
-      - dokuwiki
+    #depends_on:
+    #  - dokuwiki
     restart: unless-stopped
 
   dokuwiki:
     image: lscr.io/linuxserver/dokuwiki:latest
     container_name: dokuwiki
+    profiles:
+      - doku
     environment:
       - PUID=1001
       - PGID=1001
@@ -76,6 +80,8 @@ services:
   openvpn:
     image: openvpn/openvpn-as
     container_name: openvpn
+    profiles:
+      - ovpn
     cap_add:
       - NET_ADMIN
     volumes:
