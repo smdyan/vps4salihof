@@ -58,7 +58,7 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=europe/moscow
-      - SERVERURL=auto #optional
+      - SERVERURL=salihof.ru #optional
       - SERVERPORT=51820 #optional
       - PEERS=4 #optional
       - PEERDNS=auto #optional
@@ -75,23 +75,6 @@ services:
       - 51820:51820/udp
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
-    restart: unless-stopped
-
-  openvpn:
-    image: openvpn/openvpn-as
-    container_name: openvpn
-    profiles:
-      - ovpn
-    cap_add:
-      - NET_ADMIN
-    volumes:
-      - /vlm_docker/openvpn/config:/config
-    networks:
-      - mynet
-    ports:
-      - 943:943 #for the Admin Web UI
-      - 8443:443 #for TCP
-      - 1194:1194/udp
     restart: unless-stopped
 
 networks:
