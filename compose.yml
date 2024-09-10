@@ -63,7 +63,7 @@ services:
       - PEERS=4 #optional
       - PEERDNS=auto #optional
       - INTERNAL_SUBNET=10.13.13.0 #optional
-      - ALLOWEDIPS=0.0.0.0/0 #optional
+      - ALLOWEDIPS=10.13.13.1/32, 172.18.0.3/16 #optional
       - PERSISTENTKEEPALIVE_PEERS= #optional
       - LOG_CONFS=true #optional
     volumes:
