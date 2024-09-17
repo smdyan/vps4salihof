@@ -23,7 +23,8 @@ services:
     volumes:
       - /vlm_docker/swag/config:/config
     networks:
-      - mynet
+      mynet:
+        ipv4_address: 172.22.0.11
     ports:
       - 443:443
       - 80:80 #optional, required for http validation only
@@ -43,34 +44,37 @@ services:
     volumes:
       - /vlm_docker/dokuwiki/config:/config    
     networks:
-      - mynet
+      mynet:
+        ipv4_address: 172.22.0.13
     restart: unless-stopped
 
   wireguard:
     image: lscr.io/linuxserver/wireguard:latest
-    container_name: wireguard
+    container_name: wg
     profiles:
       - wg
     cap_add:
       - NET_ADMIN
-      - SYS_MODULE #optional
+    # - SYS_MODULE #optional; load the iptables kernel modules
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=europe/moscow
-      - SERVERURL=salihof.ru #optional
+      - SERVERURL=vpn.salihof.ru #optional
       - SERVERPORT=51820 #optional
-      - PEERS=4 #optional
+      - PEERS=papa,macbook,phone,test,client #optional
       - PEERDNS=auto #optional
       - INTERNAL_SUBNET=10.13.13.0 #optional
-      - ALLOWEDIPS=10.13.13.0/32, 172.20.0.0/16 #optional
+      - ALLOWEDIPS=10.13.13.0/32,172.22.0.0/24 #optional
+      - SERVER_ALLOWEDIPS_PEER_client="172.22.0.0/24"
       - PERSISTENTKEEPALIVE_PEERS= #optional
       - LOG_CONFS=true #optional
     volumes:
       - /vlm_docker/wireguard/config:/config
-      - /lib/modules:/lib/modules #optional
+    # - /lib/modules:/lib/modules #optional
     networks:
-      - mynet
+      mynet:
+        ipv4_address: 172.22.0.12
     ports:
       - 51820:51820/udp
     sysctls:
@@ -80,4 +84,8 @@ services:
 networks:
   mynet:
     driver: bridge
+    ipam:
+      config:
+      - subnet: 172.22.0.0/24
+        gateway: 172.22.0.1
 
