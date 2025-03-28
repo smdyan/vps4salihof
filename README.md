@@ -9,7 +9,6 @@ Setup Dokuwiki service:
 3. create dir and link for each service volumes:
 	- doku_conf -> /vlm_docker/dokuwiki/config/
 	- swag_conf -> /vlm_docker/swag/config/
-	- wguard_conf -> /vlm_docker/wireguard/config
 
 4. update file 'dokuwiki.subdomain.conf' at remote location vps/swag_conf/nginx/proxy-confs 
 

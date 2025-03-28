@@ -10,7 +10,7 @@ services:
       - PGID=1001
       - TZ=Europe/moscow
       - URL=salihof.ru
-      - SUBDOMAINS=www,wiki,str,ars,vpn
+      - SUBDOMAINS=www,wiki,str,ars
       - VALIDATION=http
         # - CERTPROVIDER= #optional
         # - DNSPLUGIN=cloudflare #optional
