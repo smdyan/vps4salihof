@@ -1,9 +1,8 @@
+name: vps
 services:
   swag:
     image: lscr.io/linuxserver/swag
     container_name: swag
-    profiles:
-      - swag
     cap_add:
       - NET_ADMIN #Linux capabilities
     environment:
@@ -11,7 +10,7 @@ services:
       - PGID=1001
       - TZ=Europe/moscow
       - URL=salihof.ru
-      - SUBDOMAINS=www,wiki,str,depo,vpn
+      - SUBDOMAINS=www,wiki,str,ars,vpn
       - VALIDATION=http
         # - CERTPROVIDER= #optional
         # - DNSPLUGIN=cloudflare #optional
@@ -28,15 +27,11 @@ services:
     ports:
       - 443:443
       - 80:80 #optional, required for http validation only
-    #depends_on:
-    #  - dokuwiki
     restart: unless-stopped
 
   dokuwiki:
     image: lscr.io/linuxserver/dokuwiki:latest
     container_name: dokuwiki
-    profiles:
-      - doku
     environment:
       - PUID=1001
       - PGID=1001
@@ -46,39 +41,8 @@ services:
     networks:
       mynet:
         ipv4_address: 172.22.0.13
-    restart: unless-stopped
-
-  wireguard:
-    image: lscr.io/linuxserver/wireguard:latest
-    container_name: wg
-    profiles:
-      - wg
-    cap_add:
-      - NET_ADMIN
-    # - SYS_MODULE #optional; load the iptables kernel modules
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=europe/moscow
-      - SERVERURL=vpn.salihof.ru #optional
-      - SERVERPORT=51820 #optional
-      - PEERS=papa,macbook,phone,test,client #optional
-      - PEERDNS=auto #optional
-      - INTERNAL_SUBNET=10.13.13.0 #optional
-      - ALLOWEDIPS=10.13.13.0/32,172.22.0.0/24 #optional
-      - SERVER_ALLOWEDIPS_PEER_client="172.22.0.0/24"
-      - PERSISTENTKEEPALIVE_PEERS= #optional
-      - LOG_CONFS=true #optional
-    volumes:
-      - /vlm_docker/wireguard/config:/config
-    # - /lib/modules:/lib/modules #optional
-    networks:
-      mynet:
-        ipv4_address: 172.22.0.12
-    ports:
-      - 51820:51820/udp
-    sysctls:
-      - net.ipv4.conf.all.src_valid_mark=1
+    depends_on:
+      - swag
     restart: unless-stopped
 
 networks:
