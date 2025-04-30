@@ -40,7 +40,7 @@ services:
       - /vlm_docker/dokuwiki/config:/config    
     networks:
       mynet:
-        ipv4_address: 172.22.0.13
+        ipv4_address: 172.22.0.12
     depends_on:
       - swag
     restart: unless-stopped
