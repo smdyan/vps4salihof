@@ -35,4 +35,6 @@ Remove the old dangling images: docker image prune
 Read logs:
 	- docker exec -it swag bash
 	- cat /config/log/letsencrypt/letsencrypt.log
+
+SWAG static rout to school api server: ip route add 172.24.0.0/24 dev eth0 via 172.22.0.13
  
