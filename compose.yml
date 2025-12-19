@@ -1,17 +1,17 @@
 name: vps
 services:
   swag:
-    image: lscr.io/linuxserver/swag
+    image: lscr.io/linuxserver/swag:latest
     container_name: swag
     cap_add:
       - NET_ADMIN #Linux capabilities
     environment:
       - PUID=1001
-      - PGID=1001
+      - PGID=100
       - TZ=Europe/moscow
       - URL=salihof.ru
-      - SUBDOMAINS=www,wiki,str,ars
       - VALIDATION=http
+      - SUBDOMAINS=www,wiki,str,ars
         # - CERTPROVIDER= #optional
         # - DNSPLUGIN=cloudflare #optional
         # - DUCKDNSTOKEN=<token> #optional
@@ -34,7 +34,7 @@ services:
   #   container_name: dokuwiki
   #   environment:
   #     - PUID=1001
-  #     - PGID=1001
+  #     - PGID=100
   #     - TZ=europe/moscow
   #   volumes:
   #     - /vlm_docker/dokuwiki/config:/config    
@@ -50,3 +50,4 @@ networks:
   mynet:
     name: mynet
     external: true
+
