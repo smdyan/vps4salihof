@@ -1,40 +1,37 @@
 # vps4salihof
 
-Setup Dokuwiki service:
+## swag
 
-1. create directory for vps services /home/user/vps
+### Setup Dokuwiki service:
 
-2. copy compose.yml to vps direcory at remote host
+* first start twg
 
-3. create dir and link for each service volumes:
-	- doku_conf -> /vlm_docker/dokuwiki/config/
-	- swag_conf -> /vlm_docker/swag/config/
+* file location '/vlm_docker/swag/config'
 
-4. update file 'dokuwiki.subdomain.conf' at remote location vps/swag_conf/nginx/proxy-confs 
+* update nginx config files:
+		'dokuwiki.subdomain.conf' at  '/vlm_docker/swag/config/nginx/proxy-confs'
+	for update run 'conf_upd.sh'
 
-5. update file 'default.conf' at remote location vps/doku_conf/nginx/site-confs
-
-6. complete the setup by appending install.php to URL
-
-7. unzip dokuwiki pages to remote location vps/doku_conf/dokuwiki/data/pages
+* add static route to 'dokuwiki' container: ip route add 172.24.0.0/24 dev eth0 via 172.22.0.13
 
 
-Dokuwiki pages backup:
+## Docker
 
-1. Create an archive: tar -cf wiki_pages_date.tar  ~/vps/doku_conf/dokuwiki/data/pages
-2. Copy from remote to local: scp user@host.ru:/home/user/wiki_pages_date.tar ./
-
-Docker:
-
-Stop single container: idocker compose stop swag
-Update single image: docker-compose pull swag
+Stop single container: docker compose stop swag
+Update single image: docker compose pull swag
 If change a Dockerfile or the contents of build directory: docker compose build --no-cache swag
 Update containers: docker-compose up -d swag
 Remove the old dangling images: docker image prune
 
-Read logs:
+```
+	docker compose down
+	docker compose pull swag
+	docker compose build --no-cache swag
+	docker compose up -d swag
+```
+
+
+### Read logs:
 	- docker exec -it swag bash
 	- cat /config/log/letsencrypt/letsencrypt.log
-
-SWAG static rout to school api server: ip route add 172.24.0.0/24 dev eth0 via 172.22.0.13
  

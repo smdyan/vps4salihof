@@ -29,27 +29,24 @@ services:
       - 80:80 #optional, required for http validation only
     restart: unless-stopped
 
-  dokuwiki:
-    image: lscr.io/linuxserver/dokuwiki:latest
-    container_name: dokuwiki
-    environment:
-      - PUID=1001
-      - PGID=1001
-      - TZ=europe/moscow
-    volumes:
-      - /vlm_docker/dokuwiki/config:/config    
-    networks:
-      mynet:
-        ipv4_address: 172.22.0.12
-    depends_on:
-      - swag
-    restart: unless-stopped
+  # dokuwiki:
+  #   image: lscr.io/linuxserver/dokuwiki:latest
+  #   container_name: dokuwiki
+  #   environment:
+  #     - PUID=1001
+  #     - PGID=1001
+  #     - TZ=europe/moscow
+  #   volumes:
+  #     - /vlm_docker/dokuwiki/config:/config    
+  #   networks:
+  #     mynet:
+  #       ipv4_address: 172.22.0.12
+  #   depends_on:
+  #     - swag
+  #   restart: unless-stopped
+
 
 networks:
   mynet:
-    driver: bridge
-    ipam:
-      config:
-      - subnet: 172.22.0.0/24
-        gateway: 172.22.0.1
-
+    name: mynet
+    external: true
