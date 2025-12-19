@@ -9,7 +9,7 @@ server {
     listen [::]:443 ssl;
 #    listen [::]:443 quic;
 
-    server_name str.*;
+    server_name wiki.*;
 
     include /config/nginx/ssl.conf;
 
