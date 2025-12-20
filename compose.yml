@@ -28,25 +28,6 @@ services:
       - 443:443
       - 80:80 #optional, required for http validation only
     restart: unless-stopped
-    command: /bin/bash -c "ip route add 172.24.0.0/24 dev eth0 via 172.22.0.13 || true; exec /init"
-
-
-  # dokuwiki:
-  #   image: lscr.io/linuxserver/dokuwiki:latest
-  #   container_name: dokuwiki
-  #   environment:
-  #     - PUID=1001
-  #     - PGID=100
-  #     - TZ=europe/moscow
-  #   volumes:
-  #     - /vlm_docker/dokuwiki/config:/config    
-  #   networks:
-  #     mynet:
-  #       ipv4_address: 172.22.0.12
-  #   depends_on:
-  #     - swag
-  #   restart: unless-stopped
-
 
 networks:
   mynet:
