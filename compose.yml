@@ -28,6 +28,8 @@ services:
       - 443:443
       - 80:80 #optional, required for http validation only
     restart: unless-stopped
+    command: /bin/bash -c "ip route add 172.24.0.0/24 dev eth0 via 172.22.0.13 || true; exec /init"
+
 
   # dokuwiki:
   #   image: lscr.io/linuxserver/dokuwiki:latest
