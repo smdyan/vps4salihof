@@ -6,8 +6,8 @@ services:
     cap_add:
       - NET_ADMIN #Linux capabilities
     environment:
-      - PUID=1001
-      - PGID=100
+      - PUID=1000
+      - PGID=1000
       - TZ=Europe/moscow
       - URL=salihof.ru
       - VALIDATION=http
