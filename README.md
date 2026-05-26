@@ -4,17 +4,15 @@
 
 ### Setup Dokuwiki service:
 
-* first start twg
-
 * file location '/vlm_docker/swag/config'
 
 * update nginx config files:
 		'dokuwiki.subdomain.conf' at  '/vlm_docker/swag/config/nginx/proxy-confs'
 	for update run 'conf_upd.sh'
 
-* add static route to 'dokuwiki' container:
+* on the host add static route to mwg2 in order containers can find the interface wg0:
 ```
-	ip route add 172.24.0.0/24 dev eth0 via 172.22.0.13
+	sudo ip route add 192.168.88.0/24 via 172.22.0.14 dev br-docker22
 ```
 
 ## Docker
